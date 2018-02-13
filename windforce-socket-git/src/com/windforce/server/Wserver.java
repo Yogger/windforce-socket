@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import com.windforce.coder.WpacketDecoder;
 import com.windforce.coder.WpacketEncoder;
-import com.windforce.common.threadpool.IdentityEventExecutorGroup;
 import com.windforce.config.ServerConfig;
 import com.windforce.config.ServerConfigConstant;
 import com.windforce.dispatcher.SocketPacketHandler;
@@ -104,8 +103,7 @@ public class Wserver {
 		}
 	}
 
-	public void bind(IdentityEventExecutorGroup identityEventExecutorGroup) throws InterruptedException, IOException {
-		socketPacketHandler.setIdentityEventExecutorGroup(identityEventExecutorGroup);
+	public void bind() throws InterruptedException, IOException {
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		ServerBootstrap serverBootstrap = new ServerBootstrap();

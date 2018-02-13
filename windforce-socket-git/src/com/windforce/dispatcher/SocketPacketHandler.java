@@ -49,12 +49,6 @@ public class SocketPacketHandler extends ChannelInboundHandlerAdapter implements
 	@Autowired
 	private SessionManager sessionManager;
 
-	private IdentityEventExecutorGroup identityEventExecutorGroup;
-
-	public void setIdentityEventExecutorGroup(IdentityEventExecutorGroup identityEventExecutorGroup) {
-		this.identityEventExecutorGroup = identityEventExecutorGroup;
-	}
-
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String name) throws BeansException {
 		Class<?> clazz = bean.getClass();
@@ -141,7 +135,7 @@ public class SocketPacketHandler extends ChannelInboundHandlerAdapter implements
 		final Object message = shd.getCodec().decode(packet.getData());
 
 		final Wsession session = sessionManager.getSession(ctx.channel().id());
-		identityEventExecutorGroup.addTask(new AbstractDispatcherHashCodeRunable() {
+		IdentityEventExecutorGroup.addTask(new AbstractDispatcherHashCodeRunable() {
 
 			@Override
 			protected void doRun() {

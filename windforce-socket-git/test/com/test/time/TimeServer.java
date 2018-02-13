@@ -18,8 +18,8 @@ public class TimeServer {
 				DEFAULT_APPLICATION_CONTEXT);
 
 		Wserver wserver = applicationContext.getBean(Wserver.class);
-		IdentityEventExecutorGroup identityEventExecutorGroup = new IdentityEventExecutorGroup(8);
-		wserver.bind(identityEventExecutorGroup);
+		IdentityEventExecutorGroup.init(8);
+		wserver.bind();
 
 		while (applicationContext.isActive()) {
 			try {
