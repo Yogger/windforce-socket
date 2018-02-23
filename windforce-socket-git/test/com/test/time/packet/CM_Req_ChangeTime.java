@@ -7,7 +7,7 @@ import com.windforce.annotation.SocketPacket;
 public class CM_Req_ChangeTime {
 	@Protobuf
 	private int nil;
-	
+
 	public int getNil() {
 		return nil;
 	}

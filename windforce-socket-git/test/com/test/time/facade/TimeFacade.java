@@ -17,15 +17,16 @@ public class TimeFacade {
 
 	@SocketMethod
 	public TimePacket getTime(Wsession session, CM_Req_Time cm) {
+		System.out.println(cm.getInnerObject().getName());
 		TimePacket tp = new TimePacket();
 		tp.setTime(new Date().getTime());
 		return tp;
 	}
-	
+
 	@SocketMethod
 	public TimePacket changeSystemTime(Wsession session, CM_Req_ChangeTime cm) {
 		// TODO 修改系统时间
-		
+
 		TimePacket tp = new TimePacket();
 		tp.setTime(new Date().getTime());
 		return tp;

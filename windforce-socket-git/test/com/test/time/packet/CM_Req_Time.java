@@ -7,6 +7,8 @@ import com.windforce.annotation.SocketPacket;
 public class CM_Req_Time {
 	@Protobuf
 	private int nil;
+	@Protobuf
+	private InnerObject innerObject;
 
 	public int getNil() {
 		return nil;
@@ -15,4 +17,13 @@ public class CM_Req_Time {
 	public void setNil(int nil) {
 		this.nil = nil;
 	}
+
+	public InnerObject getInnerObject() {
+		return innerObject;
+	}
+
+	public void setInnerObject(InnerObject innerObject) {
+		this.innerObject = innerObject;
+	}
+
 }

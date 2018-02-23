@@ -6,6 +6,7 @@ import java.util.Date;
 import com.baidu.bjf.remoting.protobuf.Codec;
 import com.baidu.bjf.remoting.protobuf.ProtobufProxy;
 import com.test.time.packet.CM_Req_Time;
+import com.test.time.packet.InnerObject;
 import com.test.time.packet.TimePacket;
 import com.windforce.core.WrequestPacket;
 import com.windforce.core.WresponsePacket;
@@ -19,7 +20,10 @@ public class TimeClientHandler extends ChannelInboundHandlerAdapter {
 
 	public TimeClientHandler() throws IOException {
 		Codec<CM_Req_Time> cmCodec = ProtobufProxy.create(CM_Req_Time.class);
-		byte[] data = cmCodec.encode(new CM_Req_Time());
+		CM_Req_Time cm = new CM_Req_Time();
+		cm.setInnerObject(new InnerObject());
+		cm.getInnerObject().setName("account_idx");
+		byte[] data = cmCodec.encode(cm);
 		firstPacket = WrequestPacket.valueOf((short) 1, data);
 	}
 
