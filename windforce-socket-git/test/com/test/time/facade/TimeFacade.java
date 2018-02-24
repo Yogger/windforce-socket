@@ -24,11 +24,10 @@ public class TimeFacade {
 	}
 
 	@SocketMethod
-	public TimePacket changeSystemTime(Wsession session, CM_Req_ChangeTime cm) {
+	public void changeSystemTime(Wsession session, CM_Req_ChangeTime cm) {
 		// TODO 修改系统时间
 
 		TimePacket tp = new TimePacket();
 		tp.setTime(new Date().getTime());
-		return tp;
 	}
 }

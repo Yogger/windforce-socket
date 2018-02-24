@@ -29,7 +29,6 @@ public class SocketHandlerDefinition {
 	}
 
 	public Object invoke(Wsession session, Object packet) {
-//		ReflectionUtils.makeAccessible(method);
 		return ReflectionUtils.invokeMethod(method, bean, session, packet);
 	}
 

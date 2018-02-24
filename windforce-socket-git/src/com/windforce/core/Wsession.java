@@ -23,6 +23,8 @@ public class Wsession {
 
 	private Channel channel;
 
+	private int dispatcherHashCode;
+
 	/** 流量记录 */
 	private FirewallRecord firewallRecord = new FirewallRecord();
 
@@ -68,6 +70,26 @@ public class Wsession {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * 当dispatcherHashCode没有初始化时选择channel的hashcode作为分发code
+	 * 
+	 * @return
+	 */
+	public int selectDispatcherHashCode() {
+		if (dispatcherHashCode == 0) {
+			return Math.abs(channel.hashCode());
+		}
+		return dispatcherHashCode;
+	}
+
+	public int getDispatcherHashCode() {
+		return dispatcherHashCode;
+	}
+
+	public void setDispatcherHashCode(int dispatcherHashCode) {
+		this.dispatcherHashCode = dispatcherHashCode;
 	}
 
 }

@@ -16,6 +16,8 @@ import com.windforce.coder.WpacketEncoder;
 import com.windforce.config.ServerConfig;
 import com.windforce.config.ServerConfigConstant;
 import com.windforce.dispatcher.SocketPacketHandler;
+import com.windforce.filter.firewall.DummyFirewallManager;
+import com.windforce.filter.firewall.FirewallManager;
 import com.windforce.filter.firewall.FlowFirewall;
 import com.windforce.filter.firewall.IpFirewall;
 
@@ -104,13 +106,19 @@ public class Wserver {
 	}
 
 	public void bind() throws InterruptedException, IOException {
+		bind(new DummyFirewallManager());
+	}
+
+	public void bind(FirewallManager firewallManager) throws InterruptedException, IOException {
+		socketPacketHandler.setFirewallManager(firewallManager);
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		ServerBootstrap serverBootstrap = new ServerBootstrap();
 		serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-				.option(ChannelOption.SO_BACKLOG, 1024).option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-				.option(ChannelOption.SO_RCVBUF, 1024 * 32).option(ChannelOption.SO_SNDBUF, 1024 * 32)
-				.handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
+				.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+				.childOption(ChannelOption.SO_BACKLOG, 1024).childOption(ChannelOption.SO_RCVBUF, 1024 * 32)
+				.childOption(ChannelOption.SO_SNDBUF, 1024 * 32).handler(new LoggingHandler(LogLevel.INFO))
+				.childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel sc) throws Exception {
 						sc.pipeline().addLast("session", sessionHandler);
